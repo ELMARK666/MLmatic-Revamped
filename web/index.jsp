@@ -127,8 +127,7 @@
                     type="password" 
                     name="password" 
                     placeholder="Enter password" 
-                    required
-                >
+                    required >
             </div>
 
             <button class="login-btn" type="submit">

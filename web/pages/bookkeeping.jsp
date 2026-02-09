@@ -940,7 +940,6 @@
                             </tr>
                             <tr>
                                 <th colspan="4" ></th>
-                                <th style="text-align-last: center;">Per Book</th>
                                 <th style="text-align-last: center;">Adjustment</th> 
                                 <th style="text-align-last: center;">Total</th> 
                                 <th style="text-align-last: center;">Per Report</th>

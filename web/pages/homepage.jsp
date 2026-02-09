@@ -460,7 +460,7 @@
            var zone = $('#generate_zones').val();
            var date = $('#generate_date').val();
            $('#Generate').attr('disabled', false);
-
+           
            $('#generate_asset_report').html("<tr><td colspan='6'><center>Generating data. Please wait</center></td></tr>");
            $.ajax({
                 url: "../asset",
