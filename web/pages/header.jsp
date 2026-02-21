@@ -7,7 +7,7 @@
     <a href="#" class="menu-item" data-target="analysis"><i class="fas fa-cog"></i> Analysis</a>
     <a href="#" class="menu-item" data-target="fsarchive"><i class="fas fa-cog"></i> FS Archive</a>
     <a href="#" class="menu-item" data-target="settings"><i class="fas fa-cog"></i> Settings</a>
-    <a href="#" class="menu-item" data-target="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    <a href="#" class="menu-item" data-target="Logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
     <img src="../style/image/faq.png" alt="Logo" style = "float: left; margin-left: 10px;  height: 40px;" />
 </div>
 <div class="dashboard">

@@ -29,13 +29,14 @@ public class login_creds extends HttpServlet {
 
         boolean valid = false;
         String role = "";
+        String name = "";
 
         System.out.println("LOGIN ATTEMPT");
         System.out.println("USERNAME = [" + username + "]");
         System.out.println("PASSWORD = [" + password + "]");
 
         String sql =
-            "SELECT r.role_name " +
+            "SELECT r.role_name, a.emp_name " +
             "FROM accounts a " +
             "JOIN account_roles r ON a.role_id = r.role_id " +
             "WHERE a.username = ? AND a.password = ?";
@@ -50,6 +51,7 @@ public class login_creds extends HttpServlet {
                 if (rs.next()) {
                     valid = true;
                     role = rs.getString("role_name");
+                    name = rs.getString("emp_name");
                 }
             }
 
@@ -61,6 +63,7 @@ public class login_creds extends HttpServlet {
             HttpSession session = request.getSession(true);
             session.setAttribute("username", username);
             session.setAttribute("role", role);
+            session.setAttribute("name", name);
 
             response.sendRedirect(request.getContextPath() + "/pages/homepage.jsp");
         } else {

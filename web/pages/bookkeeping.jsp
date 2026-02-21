@@ -1541,17 +1541,50 @@
         </div>
     </div>
 </div>
+<!--BRANCH LIST-->
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<style>
+    table.dataTable thead th {
+        position: sticky;
+        top: 0;
+        background: white;
+        z-index: 1;
+}
+</style>
+
 <div class="branchlistcontainer" style="display:none;">
     <br>
     <div style="display: flex; gap: 20px; padding: 0 20px;">
         <div style="flex: 1;">
-            <div class="form-popup">
-                <form method="POST" enctype="multipart/form-data" autocomplete="off" >
-                    <div class="form-row1">
-                        <b>branchlist</b>
-                    </div>
-                </form>
-            </div>
+            <table id="branchTable" class="display nowrap" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>Zone</th>
+                        <th>ZoneName</th>
+                        <th>Region</th>
+                        <th>RegionName</th>
+                        <th>Area</th>
+                        <th>AreaName</th>
+                        <th>Branch ID</th>
+                        <th>BranchCode</th>
+                        <th>Branch</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
 </div>
@@ -1560,11 +1593,22 @@
     <div style="display: flex; gap: 20px; padding: 0 20px;">
         <div style="flex: 1;">
             <div class="form-popup">
-                <form method="POST" enctype="multipart/form-data" autocomplete="off" >
-                    <div class="form-row1">
-                        <b>glaccount</b>
-                    </div>
-                </form>
+                <table id="branchTable" class="display nowrap" style="width:80%;">
+                <thead>
+                    <tr>
+                        <th>Zone</th>
+                        <th>ZoneName</th>
+                        <th>Region</th>
+                        <th>RegionName</th>
+                        <th>Area</th>
+                        <th>AreaName</th>
+                        <th>Branch ID</th>
+                        <th>BranchCode</th>
+                        <th>Branch</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+            </table>
             </div>
         </div>
     </div>
@@ -1616,3 +1660,37 @@
         </div>
     </div>
 </div>
+
+<script>
+$('#branchTable').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: {
+        url: "../GetBranchData",
+        type: "POST"
+    },
+    responsive: true,
+    pageLength: 10,
+    dom: 'Bfrtip',
+    buttons: ['copy', 'csv'], // 'excel', 'pdf', 'print'
+    columns: [
+        { data: "Zone" },
+        { data: "ZoneName" },
+        { data: "Region" },
+        { data: "RegionName" },
+        { data: "Area" },
+        { data: "AreaName" },
+        { data: "BranchID" },
+        { data: "BranchCode" },
+        { data: "Branch" },
+        { 
+            data: "Status", 
+            render: function(data) {
+                return data === "ACTIVE"
+                    ? '<span class="badge bg-success">Active</span>'
+                    : '<span class="badge bg-danger">Inactive</span>';
+            }
+        }
+    ]
+});
+</script>

@@ -3,13 +3,37 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <%
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            response.setHeader("Pragma", "no-cache");
+            response.setDateHeader("Expires", 0);
 
+            HttpSession sessionObj = request.getSession(false);
+
+            if (sessionObj == null || sessionObj.getAttribute("username") == null) {
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
+                return;
+            }
+        %>
+        
+        <%
+            String user = (String) session.getAttribute("username");
+            if (user != null) {
+        %>
+                <script>
+                    alert("Welcome <%= sessionObj.getAttribute("name") %>!");
+                </script>
+        <%
+                session.removeAttribute("username"); // remove so alert only shows once
+            }
+        %>
+        
         <title>Home</title>
         <meta charset="UTF-8">
         <meta name="description" content="M. Lhuillier Accounting Tool for CAD">
         <meta name="keywords" content="bookkeeping,reconciliation,consolidation,loading of parteners data">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/png" href="assets/images/favicon.ico">
+        <link rel="icon" type="image/png" href="../style/assets/images/favicon.ico">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
         <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
@@ -162,13 +186,13 @@
             });
 
             // Logout
-            const logoutLink = document.querySelector('[data-target="logout"]');
-            if (logoutLink) {
-                logoutLink.addEventListener("click", function(e) {
-                    e.preventDefault();
-                    window.location.href = "../Login/index.jsp";
-                });
-            }
+            const logoutLink = document.querySelector('[data-target="Logout"]');
+                if (logoutLink) {
+                    logoutLink.addEventListener("click", function(e) {
+                        e.preventDefault();
+                        window.location.href = "../Logout"; 
+                    });
+                }
 
             // Containers logic
             const containersMap = {
