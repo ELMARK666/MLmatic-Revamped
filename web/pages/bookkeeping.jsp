@@ -1593,22 +1593,21 @@
     <div style="display: flex; gap: 20px; padding: 0 20px;">
         <div style="flex: 1;">
             <div class="form-popup">
-                <table id="branchTable" class="display nowrap" style="width:80%;">
-                <thead>
-                    <tr>
-                        <th>Zone</th>
-                        <th>ZoneName</th>
-                        <th>Region</th>
-                        <th>RegionName</th>
-                        <th>Area</th>
-                        <th>AreaName</th>
-                        <th>Branch ID</th>
-                        <th>BranchCode</th>
-                        <th>Branch</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-            </table>
+                <table id="glAccountsTable" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Code ID</th>
+                            <th>GL Account</th>
+                            <th>Description</th>
+                            <th>Level 1</th>
+                            <th>Level 2</th>
+                            <th>Level 3</th>
+                            <th>Level 4</th>
+                            <th>FS Account Type</th>
+                            <th>Normal Balance</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
@@ -1662,6 +1661,7 @@
 </div>
 
 <script>
+    //BRANCH DATA TABLE
 $('#branchTable').DataTable({
     processing: true,
     serverSide: true,
@@ -1689,6 +1689,45 @@ $('#branchTable').DataTable({
                 return data === "ACTIVE"
                     ? '<span class="badge bg-success">Active</span>'
                     : '<span class="badge bg-danger">Inactive</span>';
+            }
+        }
+    ]
+});
+
+//GL ACCOUNTS DATA
+$('#glAccountsTable').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: {
+        url: "../GetGLAccountsData",
+        type: "POST"
+    },
+    responsive: true,
+    pageLength: 10,
+    dom: 'Bfrtip',
+    buttons: ['copy', 'csv'], // 'excel', 'pdf', 'print'
+    columns: [
+        { data: "Code_ID" },
+        { data: "GL_Account" },
+        { data: "Code_Description" },
+        { data: "Level_1" },
+        { data: "Level_2" },
+        { data: "Level_3" },
+        { data: "Level_4" },
+        { 
+            data: "FS_Account_Type",
+            render: function(data) { 
+                return data === "Debit" 
+                    ? '<span class="badge bg-danger">Debit</span>' 
+                    : '<span class="badge bg-success">Credit</span>'; 
+            }
+        },
+        { 
+            data: "Normal_Balance",
+            render: function(data) {
+                return data === "Balance Sheet"
+                    ? '<span class="badge bg-info text-dark">Balance Sheet</span>'
+                    : '<span class="badge bg-secondary">Income Statement</span>';
             }
         }
     ]
